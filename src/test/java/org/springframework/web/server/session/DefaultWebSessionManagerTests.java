@@ -19,6 +19,8 @@ import java.net.URI;
 import java.time.Clock;
 import java.time.Duration;
 import java.time.Instant;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Optional;
 
 import org.junit.Before;
@@ -140,8 +142,10 @@ public class DefaultWebSessionManagerTests {
 		}
 
 		@Override
-		public Optional<String> resolveSessionId(ServerWebExchange exchange) {
-			return this.idToResolve;
+		public List<String> resolveSessionId(ServerWebExchange exchange) {
+                    List<String> ids = new ArrayList<>(1);
+                    idToResolve.ifPresent(ids::add);
+                    return ids;
 		}
 
 		@Override

@@ -45,6 +45,8 @@ public final class HttpCookie {
 	private final boolean secure;
 
 	private final boolean httpOnly;
+        
+        private final Long creationTimestamp;
 
 
 	private HttpCookie(String name, String value) {
@@ -63,6 +65,7 @@ public final class HttpCookie {
 		this.path = path;
 		this.secure = secure;
 		this.httpOnly = httpOnly;
+                this.creationTimestamp = System.currentTimeMillis();
 	}
 
 	/**
@@ -119,6 +122,14 @@ public final class HttpCookie {
 	public boolean isHttpOnly() {
 		return this.httpOnly;
 	}
+
+        /**
+         * Return the timestamp representing the time when this cookie was created
+         * @return 
+         */
+        public Long getCreationTimestamp() {
+            return creationTimestamp;
+        }
 
 	@Override
 	public int hashCode() {

@@ -18,12 +18,11 @@ package org.springframework.web.server.session;
 import java.time.Duration;
 import java.util.Collections;
 import java.util.List;
-import java.util.Optional;
+import java.util.stream.Collectors;
 
 import org.springframework.http.HttpCookie;
 import org.springframework.http.HttpHeaders;
 import org.springframework.util.Assert;
-import org.springframework.util.CollectionUtils;
 import org.springframework.util.StringUtils;
 import org.springframework.web.server.ServerWebExchange;
 
@@ -75,11 +74,15 @@ public class CookieWebSessionIdResolver implements WebSessionIdResolver {
 
 
 	@Override
-	public Optional<String> resolveSessionId(ServerWebExchange exchange) {
+	public List<String> resolveSessionId(ServerWebExchange exchange) {
 		HttpHeaders headers = exchange.getRequest().getHeaders();
 		List<HttpCookie> cookies = headers.getCookies().get(getCookieName());
-		return (CollectionUtils.isEmpty(cookies) ?
-				Optional.empty() : Optional.of(cookies.get(0).getValue()));
+		return cookies.stream().sorted((c1, c2) -> {
+                    int path1 = c1.getPath().length();
+                    int path2 = c2.getPath().length();
+                    return path1 > path2 ? 1
+                            : path1 == path2 ? c1.getCreationTimestamp().compareTo(c2.getCreationTimestamp()) : -1;
+                }).map(HttpCookie::getValue).collect(Collectors.toList());
 	}
 
 	@Override
