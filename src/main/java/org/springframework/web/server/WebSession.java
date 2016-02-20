@@ -105,5 +105,13 @@ public interface WebSession {
 	 * session doesn't expire.
 	 */
 	Duration getMaxIdleTime();
+        
+        /**
+         * Return the value of the given attribute 
+         * @param <T>
+         * @param attribute
+         * @return 
+         */
+        <T> T getAttribute(String attribute);
 
 }

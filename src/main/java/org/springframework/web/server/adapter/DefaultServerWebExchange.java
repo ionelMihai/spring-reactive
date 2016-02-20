@@ -91,4 +91,9 @@ public class DefaultServerWebExchange implements ServerWebExchange {
 		return this.sessionMono;
 	}
 
+        @Override
+        public Object getAttribute(String attribute) {
+            return attribute == null ? null : this.attributes.get(attribute);
+        }
+
 }

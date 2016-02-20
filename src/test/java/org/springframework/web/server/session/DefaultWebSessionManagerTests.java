@@ -98,6 +98,7 @@ public class DefaultWebSessionManagerTests {
 		session.save();
 
 		assertNotNull(this.idResolver.getId());
+                assertEquals("bar", session.getAttribute("foo"));
 	}
 
 	@Test

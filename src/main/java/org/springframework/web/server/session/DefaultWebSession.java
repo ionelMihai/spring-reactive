@@ -163,7 +163,11 @@ public class DefaultWebSession implements ConfigurableWebSession, Serializable {
 				Instant.now(this.clock).minus(this.maxIdleTime).isAfter(this.lastAccessTime));
 	}
 
-
+        @Override
+        public Object getAttribute(String attribute){
+            return attribute == null ? null : this.attributes.get(attribute);
+        }
+        
 	private enum State { NEW, STARTED }
 
 }

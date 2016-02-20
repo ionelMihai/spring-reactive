@@ -55,5 +55,12 @@ public interface ServerWebExchange {
 	 * for more details.
 	 */
 	Mono<WebSession> getSession();
+        
+        /**
+         * Return the value of the given attribute
+         * @param attribute
+         * @return 
+         */
+        <T> T getAttribute(String attribute);
 
 }
